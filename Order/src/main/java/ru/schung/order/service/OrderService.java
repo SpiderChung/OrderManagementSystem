@@ -1,6 +1,5 @@
 package ru.schung.order.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import ru.schung.order.model.Order;
@@ -35,13 +34,15 @@ public class OrderService {
         return order;
     }
 
-    public Order getMaxTotalOrder(Date date) {
-      return orderRepository.findTopByOrderDateOrderByTotalAmount(date);
+    public Order getMaxTotalOrder(String date) {
+      return orderRepository.findTopByOrderDateOrderByTotalAmount(convertToDate(date));
     }
-//
-//    public List<Long> getOrdersWithoutItem(Long itemId, String startDate, String endDate) {
-//       return orderRepository.findOrdersWithoutItem(itemId, startDate, endDate);
-//    }
+
+    public List<Long> getOrdersWithoutItem(Long itemId, String startDate, String endDate) {
+        return orderRepository.findByOrderNumberNotAndOrderDateBetween(itemId,
+                convertToDate(startDate), convertStringToDate(endDate)).stream()
+                .map(Order::getOrderNumber).toList();
+    }
 
     public static Date convertStringToDate(String dateString) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyMMdd"); // Формат строки даты
@@ -51,6 +52,19 @@ public class OrderService {
             e.printStackTrace();
             return null;
         }
+    }
+
+    private Date convertToDate(String dateString) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyMMdd");
+        Date date = null;
+        try {
+            date = dateFormat.parse(dateString);
+            System.out.println("Date: " + date);
+        } catch (ParseException e) {
+            System.out.println("Invalid date format");
+            e.printStackTrace();
+        }
+        return date;
     }
 }
 
