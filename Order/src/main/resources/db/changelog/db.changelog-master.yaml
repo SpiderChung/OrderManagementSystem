@@ -1,3 +1,66 @@
 databaseChangeLog:
-  - include:
-      file: db/changelog/0.0.1/changelog-1.sql
+  - includeAll:
+      path: db/changelog/0.0.1/
+  - includeAll:
+      path: db/changelog/data/
+
+  - changeSet:
+      id: create-table
+      author: schung
+      changes:
+        - sqlFile:
+            path: "db/changelog/0.0.1/changelog-1.sql"
+
+  - changeSet:
+      id: loadData-order-table
+      author: schung
+      changes:
+        - loadData:
+            columns:
+              - column:
+                  index: 1
+                  name: order_number
+              - column:
+                  index: 2
+                  name: total_amount
+                  type: NUMERIC
+              - column:
+                  index: 3
+                  name: order_date
+            commentLineStartsWith: //
+            encoding: UTF-8
+            file: "data/order_table.csv"
+            quotchar: ''''
+            relativeToChangelogFile: true
+            schemaName: public
+            separator: ","
+            tableName: order_table
+            usePreparedStatements: true
+
+  - changeSet:
+      id: loadData-order-items
+      author: schung
+      changes:
+        - loadData:
+            columns:
+              - column:
+                  index: 1
+                  name: id
+              - column:
+                  index: 2
+                  name: item_name
+              - column:
+                  index: 3
+                  name: quantity
+              - column:
+                  index: 4
+                  name: order_id
+            commentLineStartsWith: //
+            encoding: UTF-8
+            file: "data/order_item.csv"
+            quotchar: ''''
+            relativeToChangelogFile: true
+            schemaName: public
+            separator: ","
+            tableName: order_item
+            usePreparedStatements: true

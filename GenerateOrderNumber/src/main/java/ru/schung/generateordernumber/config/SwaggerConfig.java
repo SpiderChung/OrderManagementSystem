@@ -13,21 +13,8 @@ import java.util.List;
 @Configuration
 public class SwaggerConfig {
     @Bean
-    public OpenAPI api() {
+    public OpenAPI mainAppOpenAPI() {
         return new OpenAPI()
-                .servers(
-                        List.of(new Server().url("http://localhost:8080"))
-                )
-                .info(
-                        new Info().title("Генератор номера заказа")
-                );
-    }
-
-    @Bean
-    public GroupedOpenApi myGroupedOpenApi() {
-        return GroupedOpenApi.builder()
-                .group("my-api")
-                .pathsToMatch("/api/**")
-                .build();
+                .info(new Info().title("Main API Documentation").version("1.0.0"));
     }
 }
