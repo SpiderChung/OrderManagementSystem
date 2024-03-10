@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Объединенный Swagger UI</title>
+    <link rel="stylesheet" type="text/css" href="webjars/swagger-ui/index.html/swagger-ui.css" />
+    <script src="webjars/swagger-ui/index.html/swagger-ui-bundle.js"> </script>
+    <script src="webjars/swagger-ui/index.html/swagger-ui-standalone-preset.js"> </script>
+</head>
+<body>
+<div id="swagger-ui"></div>
+<script>
+    window.onload = function() {
+        const ui = SwaggerUIBundle({
+            urls: [
+                {url: "http://localhost:8081/v3/api-docs/app1", name: "Приложение 1"},
+                {url: "http://localhost:8080/v3/api-docs/app2", name: "Приложение 2"}
+            ],
+            dom_id: '#swagger-ui',
+            deepLinking: true,
+            presets: [
+                SwaggerUIBundle.presets.apis,
+                SwaggerUIStandalonePreset
+            ],
+            layout: "StandaloneLayout"
+        });
+    };
+</script>
+</body>
+</html>
