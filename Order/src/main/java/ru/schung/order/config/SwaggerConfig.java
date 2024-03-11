@@ -15,7 +15,7 @@ public class SwaggerConfig {
     @Bean
     public OpenAPI aggregatedAppOpenAPI() {
         return new OpenAPI()
-                .info(new Info().title("Aggregated API Documentation").version("1.0.0"));
+                .info(new Info().title("Управление заказами").version("1.0.0"));
     }
 
     @Bean

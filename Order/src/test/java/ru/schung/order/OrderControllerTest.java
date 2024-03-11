@@ -1,5 +1,6 @@
 package ru.schung.order;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -57,7 +58,7 @@ class OrderControllerTest {
 
     @Test
     void getMaxTotalOrderTest() throws Exception {
-        String date = "220101";
+        String date = "240310";
         Long orderNumber = 123456789L;
 
         given(orderService.getMaxTotalOrder(date)).willReturn(new Order());
@@ -69,15 +70,15 @@ class OrderControllerTest {
 
     @Test
     void getOrdersWithoutItemTest() throws Exception {
-        Long itemId = 1L;
-        String startDate = "220101";
-        String endDate = "220102";
+        String itemName = "sock";
+        String startDate = "240301";
+        String endDate = "240310";
         List<Long> orderNumbers = List.of(123456789L);
 
-        given(orderService.getOrdersWithoutItem(itemId, startDate, endDate)).willReturn(orderNumbers);
+        given(orderService.getOrdersWithoutItem(itemName, startDate, endDate)).willReturn(orderNumbers);
 
         mockMvc.perform(get("/api/order/withoutItem")
-                        .param("itemId", itemId.toString())
+                        .param("itemName", itemName)
                         .param("startDate", startDate)
                         .param("endDate", endDate))
                 .andExpect(status().isOk())

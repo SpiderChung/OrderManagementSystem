@@ -9,7 +9,7 @@ import lombok.Data;
 import java.util.Date;
 import java.util.List;
 
-@Entity(name = "order_table")
+@Entity(name = "order_manage")
 @Data
 public class Order {
     @Id

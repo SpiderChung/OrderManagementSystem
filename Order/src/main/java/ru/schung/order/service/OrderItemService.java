@@ -1,7 +1,7 @@
 package ru.schung.order.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.schung.order.exception.ItemNameNotFoundException;
 import ru.schung.order.model.Order;
 import ru.schung.order.model.OrderItem;
 import ru.schung.order.model.OrderItemDTO;
@@ -24,6 +24,12 @@ public class OrderItemService {
                 .collect(Collectors.toList());
         orderItemRepository.saveAll(items);
         return items;
+    }
+
+    public Long findOrderByItemName(String itemName) {
+        return orderItemRepository.findByItemName(itemName)
+                .map(orderItem -> orderItem.getOrder().getOrderNumber())
+                .orElseThrow(() -> new ItemNameNotFoundException("There isn't item with name " + itemName));
     }
 
     private OrderItem mapToOrderItem(OrderItemDTO orderItemDTO, Order order) {

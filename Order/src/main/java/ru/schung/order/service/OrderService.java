@@ -2,6 +2,7 @@ package ru.schung.order.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import ru.schung.order.exception.ItemNameNotFoundException;
 import ru.schung.order.model.Order;
 import ru.schung.order.model.OrderNumber;
 import ru.schung.order.repository.OrderRepository;
@@ -14,10 +15,12 @@ import java.util.List;
 @Service
 public class OrderService {
     private final OrderRepository orderRepository;
+    private final OrderItemService orderItemService;
     private final RestTemplate restTemplate;
 
-    public OrderService(OrderRepository orderRepository, RestTemplate restTemplate) {
+    public OrderService(OrderRepository orderRepository, OrderItemService orderItemService, RestTemplate restTemplate) {
         this.orderRepository = orderRepository;
+        this.orderItemService = orderItemService;
         this.restTemplate = restTemplate;
     }
 
@@ -38,16 +41,17 @@ public class OrderService {
       return orderRepository.findTopByOrderDateOrderByTotalAmount(convertToDate(date));
     }
 
-    public List<Long> getOrdersWithoutItem(Long itemId, String startDate, String endDate) {
-        return orderRepository.findByOrderNumberNotAndOrderDateBetween(itemId,
+    public List<Long> getOrdersWithoutItem(String itemId, String startDate, String endDate) throws ItemNameNotFoundException {
+        Long orderNumber = orderItemService.findOrderByItemName(itemId);
+        return orderRepository.findByOrderNumberNotAndOrderDateBetween(orderNumber,
                 convertToDate(startDate), convertStringToDate(endDate)).stream()
                 .map(Order::getOrderNumber).toList();
     }
 
     public static Date convertStringToDate(String dateString) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyMMdd"); // Формат строки даты
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyMMdd");
         try {
-            return dateFormat.parse(dateString); // Парсим строку в объект Date
+            return dateFormat.parse(dateString);
         } catch (ParseException e) {
             e.printStackTrace();
             return null;

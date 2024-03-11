@@ -1,6 +1,6 @@
 databaseChangeLog:
-  - includeAll:
-      path: db/changelog/0.0.1/
+#  - includeAll:
+#      path: db/changelog/0.0.1/
   - includeAll:
       path: db/changelog/data/
 
@@ -34,7 +34,7 @@ databaseChangeLog:
             relativeToChangelogFile: true
             schemaName: public
             separator: ","
-            tableName: order_table
+            tableName: order_manage
             usePreparedStatements: true
 
   - changeSet:
