@@ -9,7 +9,7 @@ import ru.schung.order.exception.ItemNameNotFoundException;
 import ru.schung.order.exception.NoOrdersException;
 import ru.schung.order.model.Order;
 import ru.schung.order.model.OrderItemDTO;
-import ru.schung.order.service.OrderItemService;
+import ru.schung.order.service.OrderItemServiceImpl;
 import ru.schung.order.service.OrderService;
 
 import java.util.List;
@@ -20,9 +20,9 @@ import java.util.Optional;
 public class OrderController {
 
     private final OrderService orderService;
-    private final OrderItemService orderItemService;
+    private final OrderItemServiceImpl orderItemService;
 
-    public OrderController(OrderService orderService, OrderItemService orderItemService) {
+    public OrderController(OrderService orderService, OrderItemServiceImpl orderItemService) {
         this.orderService = orderService;
         this.orderItemService = orderItemService;
     }
@@ -31,7 +31,7 @@ public class OrderController {
             summary = "Создание заказа",
             description = "Создает заказ с указанными товарами"
     )
-    @PostMapping("/create")
+    @PostMapping()
     public Order createOrder(@RequestBody List<OrderItemDTO> items) {
         Double quantity = items.stream().map(OrderItemDTO::getQuantity)
                 .mapToDouble(Double::doubleValue).sum();

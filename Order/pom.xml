@@ -53,6 +53,12 @@
 			<artifactId>springdoc-openapi-webmvc-core</artifactId>
 			<version>1.6.14</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct</artifactId>
+			<version>1.6.0.Beta1</version>
+		</dependency>
 <!--		<dependency>-->
 <!--			<groupId>io.springfox</groupId>-->
 <!--			<artifactId>springfox-swagger-ui</artifactId>-->
@@ -115,6 +121,7 @@
 					<!-- зависимости плагина, если требуется -->
 				</dependencies>
 			</plugin>
+
 		</plugins>
 	</build>
 

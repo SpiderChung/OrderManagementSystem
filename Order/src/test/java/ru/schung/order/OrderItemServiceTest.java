@@ -13,7 +13,7 @@ import ru.schung.order.model.Order;
 import ru.schung.order.model.OrderItem;
 import ru.schung.order.model.OrderItemDTO;
 import ru.schung.order.repository.OrderItemRepository;
-import ru.schung.order.service.OrderItemService;
+import ru.schung.order.service.OrderItemServiceImpl;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,7 +27,7 @@ class OrderItemServiceTest {
     private OrderItemRepository orderItemRepository;
 
     @InjectMocks
-    private OrderItemService orderItemService;
+    private OrderItemServiceImpl orderItemService;
 
     @Test
     void createOrderItemsTest() {

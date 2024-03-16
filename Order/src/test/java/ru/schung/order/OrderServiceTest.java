@@ -15,14 +15,14 @@ import org.springframework.web.client.RestTemplate;
 import ru.schung.order.model.Order;
 import ru.schung.order.model.OrderItem;
 import ru.schung.order.model.OrderNumber;
-import ru.schung.order.repository.OrderItemRepository;
 import ru.schung.order.repository.OrderRepository;
-import ru.schung.order.service.OrderItemService;
+import ru.schung.order.service.OrderItemServiceImpl;
 import ru.schung.order.service.OrderService;
+import ru.schung.order.service.OrderServiceImpl;
+import ru.schung.order.utils.OrderUtils;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -32,14 +32,14 @@ class OrderServiceTest {
     @Mock
     private OrderRepository orderRepository;
     @Mock
-    private OrderItemService orderItemService;
+    private OrderItemServiceImpl orderItemService;
 
     @Mock
     private RestTemplate restTemplate;
 
 
     @InjectMocks
-    private OrderService orderService;
+    private OrderServiceImpl orderService;
 
     private Long expectedOrderNumber;
 
@@ -60,7 +60,7 @@ class OrderServiceTest {
 
         Order expectedOrder = new Order();
         expectedOrder.setOrderNumber(expectedOrderNumber);
-        expectedOrder.setOrderDate(OrderService.convertStringToDate(expectedDateStr));
+        expectedOrder.setOrderDate(OrderUtils.convertStringToDate(expectedDateStr));
         expectedOrder.setTotalAmount(expectedQuantity);
 
         when(orderRepository.save(any(Order.class))).thenReturn(expectedOrder);
@@ -70,7 +70,7 @@ class OrderServiceTest {
         assertThat(resultOrder).isNotNull();
         assertThat(resultOrder.getOrderNumber()).isEqualTo(expectedOrderNumber);
         assertThat(resultOrder.getTotalAmount()).isEqualTo(expectedQuantity);
-        assertThat(resultOrder.getOrderDate()).isEqualTo(OrderService.convertStringToDate(expectedDateStr));
+        assertThat(resultOrder.getOrderDate()).isEqualTo(OrderUtils.convertStringToDate(expectedDateStr));
 
         verify(orderRepository).save(any(Order.class));
     }
@@ -78,7 +78,7 @@ class OrderServiceTest {
     @Test
     void getMaxTotalOrderTest() {
         String dateStr = "240310";
-        Date date = OrderService.convertStringToDate(dateStr);
+        Date date = OrderUtils.convertStringToDate(dateStr);
         Order expectedOrder = new Order();
         expectedOrder.setOrderNumber(expectedOrderNumber);
 
@@ -95,8 +95,8 @@ class OrderServiceTest {
         String itemName = "sock";
         String startDateStr = "240301";
         String endDateStr = "240310";
-        Date startDate = OrderService.convertStringToDate(startDateStr);
-        Date endDate = OrderService.convertStringToDate(endDateStr);
+        Date startDate = OrderUtils.convertStringToDate(startDateStr);
+        Date endDate = OrderUtils.convertStringToDate(endDateStr);
 
         List<Order> orders = List.of(new Order(), new Order());
         orders.get(0).setOrderNumber(123456789L);

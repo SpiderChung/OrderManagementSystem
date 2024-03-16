@@ -1,11 +1,9 @@
 package ru.schung.order;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
+
 import static org.mockito.BDDMockito.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -16,7 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import ru.schung.order.controller.OrderController;
 import ru.schung.order.model.Order;
 import ru.schung.order.model.OrderItemDTO;
-import ru.schung.order.service.OrderItemService;
+import ru.schung.order.service.OrderItemServiceImpl;
 import ru.schung.order.service.OrderService;
 
 import java.util.List;
@@ -35,7 +33,7 @@ class OrderControllerTest {
     private OrderService orderService;
 
     @MockBean
-    private OrderItemService orderItemService;
+    private OrderItemServiceImpl orderItemService;
 
     @Autowired
     private ObjectMapper objectMapper;
