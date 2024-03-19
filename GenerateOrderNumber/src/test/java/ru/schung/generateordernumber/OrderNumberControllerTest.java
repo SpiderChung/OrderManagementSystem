@@ -1,10 +1,8 @@
 package ru.schung.generateordernumber;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
+
 import static org.mockito.BDDMockito.given;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -13,8 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.schung.generateordernumber.controller.OrderNumberController;
-import ru.schung.generateordernumber.model.OrderNumber;
-import ru.schung.generateordernumber.service.OrderNumberService;
+import ru.schung.generateordernumber.service.OrderNumberServiceImpl;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -28,7 +25,7 @@ public class OrderNumberControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private OrderNumberService orderNumberService;
+    private OrderNumberServiceImpl orderNumberService;
 
     @Test
     public void generateNumberTest() throws Exception {

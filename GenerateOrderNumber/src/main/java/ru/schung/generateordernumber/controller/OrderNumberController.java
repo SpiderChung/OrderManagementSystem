@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.schung.generateordernumber.model.OrderNumber;
 import ru.schung.generateordernumber.service.OrderNumberService;
+import ru.schung.generateordernumber.service.OrderNumberServiceImpl;
 
 @RestController
 @RequestMapping("api/order")
@@ -20,8 +21,6 @@ public class OrderNumberController {
     )
     @GetMapping("/generate")
     public OrderNumber generateNumber() {
-        Long orderNumber = orderNumberService.generateRandomOrderNumber();
-        String dateTime = orderNumberService.getCurrentDateTime();
-        return new OrderNumber(orderNumber, dateTime);
+        return orderNumberService.createOrderNumber();
     }
 }

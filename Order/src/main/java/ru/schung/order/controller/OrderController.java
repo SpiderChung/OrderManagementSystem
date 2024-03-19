@@ -9,6 +9,7 @@ import ru.schung.order.exception.ItemNameNotFoundException;
 import ru.schung.order.exception.NoOrdersException;
 import ru.schung.order.model.Order;
 import ru.schung.order.model.OrderItemDTO;
+import ru.schung.order.service.OrderItemService;
 import ru.schung.order.service.OrderItemServiceImpl;
 import ru.schung.order.service.OrderService;
 
@@ -20,9 +21,9 @@ import java.util.Optional;
 public class OrderController {
 
     private final OrderService orderService;
-    private final OrderItemServiceImpl orderItemService;
+    private final OrderItemService orderItemService;
 
-    public OrderController(OrderService orderService, OrderItemServiceImpl orderItemService) {
+    public OrderController(OrderService orderService, OrderItemService orderItemService) {
         this.orderService = orderService;
         this.orderItemService = orderItemService;
     }
@@ -66,19 +67,7 @@ public class OrderController {
         return orderService.getOrdersWithoutItem(itemName, startDate, endDate);
     }
 
-    @ExceptionHandler(ItemNameNotFoundException.class)
-    public ResponseEntity<ErrorMessage> handleItemNameException(ItemNameNotFoundException exception) {
-        return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .body(new ErrorMessage(exception.getMessage()));
-    }
 
-    @ExceptionHandler(NoOrdersException.class)
-    public ResponseEntity<String> handleNoOrdersException(NoOrdersException exception) {
-        return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .body(exception.getMessage());
-    }
 
 
 }

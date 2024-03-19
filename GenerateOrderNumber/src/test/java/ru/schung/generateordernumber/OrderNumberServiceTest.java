@@ -4,7 +4,7 @@ package ru.schung.generateordernumber;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import ru.schung.generateordernumber.service.OrderNumberService;
+import ru.schung.generateordernumber.service.OrderNumberServiceImpl;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class OrderNumberServiceTest {
 
     @Autowired
-    private OrderNumberService orderNumberService;
+    private OrderNumberServiceImpl orderNumberService;
 
     /**
      * Проверка генерируемого значения на количество знаков
