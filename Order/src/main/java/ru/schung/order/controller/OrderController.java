@@ -13,11 +13,12 @@ import ru.schung.order.service.OrderItemService;
 import ru.schung.order.service.OrderItemServiceImpl;
 import ru.schung.order.service.OrderService;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/order")
+@RequestMapping("/api/orders")
 public class OrderController {
 
     private final OrderService orderService;
@@ -34,8 +35,8 @@ public class OrderController {
     )
     @PostMapping()
     public Order createOrder(@RequestBody List<OrderItemDTO> items) {
-        Double quantity = items.stream().map(OrderItemDTO::getQuantity)
-                .mapToDouble(Double::doubleValue).sum();
+        BigDecimal quantity = items.stream().map(OrderItemDTO::getQuantity)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
         Order order = orderService.createOrder(quantity);
         orderItemService.createOrderItems(items, order);
         return order;

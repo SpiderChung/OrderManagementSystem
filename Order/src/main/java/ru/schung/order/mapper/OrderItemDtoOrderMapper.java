@@ -5,7 +5,7 @@ import ru.schung.order.model.Order;
 import ru.schung.order.model.OrderItem;
 import ru.schung.order.model.OrderItemDTO;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface OrderItemDtoOrderMapper {
     public OrderItem OrderItemDtoToOrderItem(OrderItemDTO orderItemDTO, Order order);
 }

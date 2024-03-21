@@ -11,15 +11,18 @@ import ru.schung.order.repository.OrderItemRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class OrderItemServiceImpl {
+@Service
+public class OrderItemServiceImpl implements OrderItemService {
     private final OrderItemRepository orderItemRepository;
     private final OrderItemDtoOrderMapper mapper;
+
 
     public OrderItemServiceImpl(OrderItemRepository orderItemRepository, OrderItemDtoOrderMapper mapper) {
         this.orderItemRepository = orderItemRepository;
         this.mapper = mapper;
     }
 
+    @Override
     public List<OrderItem> createOrderItems(List<OrderItemDTO> itemsDTO, Order order) {
         List<OrderItem> items = itemsDTO.stream()
                 .map(item -> mapper.OrderItemDtoToOrderItem(item, order))
@@ -27,7 +30,7 @@ public class OrderItemServiceImpl {
         orderItemRepository.saveAll(items);
         return items;
     }
-
+    @Override
     public Long findOrderByItemName(String itemName) {
         return orderItemRepository.findByItemName(itemName)
                 .map(orderItem -> orderItem.getOrder().getOrderNumber())
