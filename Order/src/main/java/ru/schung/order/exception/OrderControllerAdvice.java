@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.net.ConnectException;
+
 @ControllerAdvice
 public class OrderControllerAdvice {
     @ExceptionHandler(ItemNameNotFoundException.class)
@@ -21,5 +23,12 @@ public class OrderControllerAdvice {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .body(exception.getMessage());
+    }
+
+    @ExceptionHandler(ConnectException.class)
+    public ResponseEntity<String> handleConnectException(ConnectException e) {
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(e.getMessage());
     }
 }
